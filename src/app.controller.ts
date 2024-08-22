@@ -9,7 +9,6 @@ export class AppController {
   @Render('index')
   async getHomePage() {
     const apiData = await this.appService.getApiData();
-    console.log(apiData);
     return { apiData };
   }
 }

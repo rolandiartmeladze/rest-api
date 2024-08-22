@@ -3,17 +3,31 @@ html
   head
     title #{apiData.title}
     link(rel='stylesheet', href='/styles.css') 
+    script.
+      function sendRequest(userId, method) {
+        fetch(`/users/${userId}`, {
+          method: method,
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          alert(`Request ${method} sent for user ID: ${userId}`);
+        })
+        .catch(error => console.error('Error:', error));
+      }
   body
     h1 #{apiData.description}
 
     h2 Users List ( Click user and send pull or delete request )
     section 
       each user in apiData.users
-        article 
+        article(key=user.id) 
           div 
             h5 #{user.first_name}
             samp #{user.email}
           img(src=user.avatar, alt=user.id)
+          button(onclick=`event.stopPropagation(); sendRequest(${user.id}, 'DELETE')`) Delete User
+
 
     h2 Items
     ul
