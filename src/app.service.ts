@@ -9,8 +9,8 @@ export class AppService {
     const userData = await this.userService.getUserData().toPromise();
     return {
       title: 'API Data',
-      description: 'Fetch API from GER recuest in index.pug File ',
-      users: userData.data, // Ensure this matches the structure returned by the API
+      description: 'Fetch API Nest.JS Project and Show result in index.pug File ',
+      users: userData.data, 
       items: ['Item 1', 'Item 2', 'Item 3'],
     };
   }

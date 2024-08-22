@@ -1,6 +1,8 @@
 .App {
     font-family: sans-serif;
     text-align: center;
+    transition: 0.3s ease-in-out;
+
   }
   
   .flex {
@@ -19,4 +21,62 @@
     display: inline-block;
     max-width: 100%;
   }
+
+  body{
+    background-color: gray;
+  }
   
+  h1{
+    text-align: center;
+    color: cyan;
+  }
+  
+  h2{
+    margin-left: 32px;
+  }
+
+  
+section{
+  gap: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+article{
+  display: flex;
+    width: 20%;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 6px;
+    box-shadow: 0px 0px 1px 0.5px black;
+    transition: 0.3s ease-in-out;
+}
+
+article:hover{
+  box-shadow: 0px 0px 1px 0.5px rgb(255, 255, 255);
+}
+article:hover img{
+  transition: 0.3s ease-in-out;
+  transform: scale(1.04);
+}
+
+article:hover div h5{
+  color: white;
+ }
+ article:hover div samp{
+  color: yellow;
+ }
+  
+
+article div{
+
+    margin: 4px;
+}
+
+h5{
+  margin: 0px;
+  text-align: center;
+}
