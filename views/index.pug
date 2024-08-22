@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title #{apiData.title}
+  body
+    h1 #{apiData.description}
+
+    h2 Users List
+    ul
+      each user in apiData.users
+        li img(src=user.avatar, alt=user.id) #{user.first_name} #{user.last_name} - #{user.email}
+        
+    h2 Items
+    ul
+      each item in apiData.items
+        li #{item}

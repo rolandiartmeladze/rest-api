@@ -92,3 +92,31 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 # rest-api
 nest.js Project 
 >>>>>>> origin/main
+
+
+
+<hr/>
+<hr/>
+
+# Rest-API Project
+
+This project is a simple REST API built using the [NestJS](https://nestjs.com/) framework. It demonstrates how to integrate views with the Pug template engine and handle basic routing and rendering with NestJS.
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Setup Instructions](#setup-instructions)
+- [Running the Application](#running-the-application)
+- [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Installation
+
+To get started with this project, clone the repository and install the dependencies:
+
+```bash
+git clone https://github.com/your-username/your-repository.git
+cd rest-api
+npm install

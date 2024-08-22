@@ -1,0 +1,12 @@
+import { Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
+import { UserService } from './user.service';
+import { UserController } from './user.controller';  // Import UserController
+
+@Module({
+  imports: [HttpModule],
+  providers: [UserService],
+  exports: [UserService],
+  controllers: [UserController], 
+})
+export class UserModule {}  
