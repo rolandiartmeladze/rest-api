@@ -11,25 +11,29 @@ html
         .then(response => response.json())
         .then(data => {
           console.log(data);
-          alert(`Request ${method} sent for user ID: ${userId}`);
+          if (method === 'DELETE') {
+            alert(`User with ID: ${userId} deleted.`);
+            window.location.reload(); 
+          } else {
+            window.location = `/users/${userId}`; 
+          }
         })
         .catch(error => console.error('Error:', error));
+      }
+
+      function viewUser(userId) {
+        window.location = `/users/${userId}`; 
       }
   body
     h1 #{apiData.description}
 
-    h2 Users List ( Click user and send pull or delete request )
+    h2 Users List (Click user to view details or delete)
     section 
       each user in apiData.users
-        article(key=user.id) 
+        article(key=user.id, onclick=`viewUser(${user.id})`)
           div 
             h5 #{user.first_name}
             samp #{user.email}
           img(src=user.avatar, alt=user.id)
-          button(onclick=`event.stopPropagation(); sendRequest(${user.id}, 'DELETE')`) Delete User
 
-
-    h2 Items
-    ul
-      each item in apiData.items
-        li #{item}
+    

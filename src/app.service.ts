@@ -5,13 +5,20 @@ import { UserService } from './user/user.service';
 export class AppService {
   constructor(private readonly userService: UserService) {}
 
-  async getApiData(): Promise<any> {
+
+  async getApiData(id: string | null = null): Promise<any> {
     const userData = await this.userService.getUserData().toPromise();
+    
+    let filteredUser = null;
+    if (id) {
+      filteredUser = userData.data.find((user: any) => user.id === parseInt(id));
+    }
+
     return {
       title: 'API Data',
-      description: 'Fetch API Nest.JS Project and Show result in index.pug File ',
+      description: 'Fetch API Nest.JS Project and Show result in index.pug File',
       users: userData.data, 
-      items: ['Item 1', 'Item 2', 'Item 3'],
+
     };
   }
 }

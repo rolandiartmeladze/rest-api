@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title User Details
+    link(rel='stylesheet', href='/styles.css')
+  body
+    h1 User Details
+
+    if apiData.item.id
+      div
+        h2 #{apiData.item.first_name} #{apiData.item.last_name}
+        p Email: #{apiData.item.email}
+        img(src=apiData.item.avatar, alt='User Avatar')
+    else
+      h2 #{apiData.item.message}  // Display 'User not found' message
