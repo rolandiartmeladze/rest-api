@@ -3,11 +3,11 @@ import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-@Controller('users')
+@Controller()
 export class UserController { 
   constructor(private readonly userService: UserService) {}
 
-  @Get(':id')
+  @Get('users/:id')
   findOne(@Param('id') id: string): Observable<any> {
     return this.userService.getUserData().pipe(
       map(response => {
@@ -17,8 +17,13 @@ export class UserController {
     );
   }
 
-  @Get()
-  getUserData(): Observable<any> {
-    return this.userService.getUserData();
+  @Get('users')
+  // @Render('index')
+  async getUserData() {
+    const userData = await this.userService.getUserData().toPromise();
+    return { 
+      title: 'User List',
+      users: userData.data 
+    };
   }
 }

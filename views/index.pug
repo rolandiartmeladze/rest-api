@@ -3,37 +3,38 @@ html
   head
     title #{apiData.title}
     link(rel='stylesheet', href='/styles.css') 
-    script.
-      function sendRequest(userId, method) {
-        fetch(`/users/${userId}`, {
-          method: method,
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          if (method === 'DELETE') {
-            alert(`User with ID: ${userId} deleted.`);
-            window.location.reload(); 
-          } else {
-            window.location = `/users/${userId}`; 
-          }
-        })
-        .catch(error => console.error('Error:', error));
-      }
+  //-   script.
+  //-     function sendRequest(userId, method) {
+  //-       fetch(`/users/${userId}`, {
+  //-         method: method,
+  //-       })
+  //-       .then(response => response.json())
+  //-       .then(data => {
+  //-         console.log(data);
+  //-         if (method === 'DELETE') {
+  //-           alert(`User with ID: ${userId} deleted.`);
+  //-           window.location.reload(); 
+  //-         } else {
+  //-           window.location = `/users/${userId}`; 
+  //-         }
+  //-       })
+  //-       .catch(error => console.error('Error:', error));
+  //-     }
 
-      function viewUser(userId) {
-        window.location = `/users/${userId}`; 
-      }
-  body
-    h1 #{apiData.description}
+  //-     function viewUser(userId) {
+  //-       window.location = `/users/${userId}`; 
+  //-     }
+  //- body
+  //-   h1 #{apiData.description}
 
-    h2 Users List (Click user to view details or delete)
-    section 
-      each user in apiData.users
-        article(key=user.id, onclick=`viewUser(${user.id})`)
-          div 
-            h5 #{user.first_name}
-            samp #{user.email}
-          img(src=user.avatar, alt=user.id)
+  //-   h2 Users List (Click a user to view details or delete)
+  //-   section 
+  //-     each user in apiData.users
+  //-       article(key=user.id, onclick=`viewUser(${user.id})`)
+  //-         div 
+  //-           h5 #{user.first_name} #{user.last_name}
+  //-           samp #{user.email}
+  //-         img(src=user.avatar, alt=`Avatar of ${user.first_name} ${user.last_name}`)
 
-    
+
+h1 hallo
