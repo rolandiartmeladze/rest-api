@@ -30,4 +30,13 @@ export class AppService {
       users: userData.data,
     };
   }
+
+  getHome(): Observable<any | null> {
+    return this.getUserData().pipe(
+      map(data => ({
+        users: data.data 
+      })),
+    );
+  }
+
 }

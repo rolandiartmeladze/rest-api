@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Render } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -25,5 +25,16 @@ export class UserController {
       title: 'User List',
       users: userData.data 
     };
+  }
+
+  @Get()
+  // @Render('index')
+  async getHomePage() {
+    const userData = await this.userService.getUserData().toPromise();
+    return { 
+      title: 'Back API in index.pug',
+      users: userData.data 
+    };
+
   }
 }
