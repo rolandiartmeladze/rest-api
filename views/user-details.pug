@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title User Details
+    link(rel='stylesheet', href='/styles.css')
+  body
+    h1 Hear Back response With selected user ById
+    h3 Back Home 
+      a(href=`/`, target='_self') index
+    h2 GET Request:
+      a(href=`/users/${id}`, target='_blank') GET /users/#{id}
+    section 
+      article 
+        div
+          h5 #{first_name} #{last_name}
+        samp Email: #{email}
+        samp ID: #{id}
+        br
+        img(src=avatar, alt=`Avatar of ${first_name}`)
+

@@ -14,6 +14,17 @@ export class AppController {
     return this.appService.getHome().toPromise(); 
   }
   
+
+  @Get('/user/:id')
+  @Render('user-details')
+  findone(@Param('id') id: string): Observable<any> {
+    return this.appService.getUserData().pipe(
+      map(response => {
+        const user = response.data.find((user: any) => user.id === parseInt(id, 10));
+        return user || { message: 'User not found' };
+      }),
+    );
+  }  
   
   @Get('/users/:id')
   findOne(@Param('id') id: string): Observable<any> {
