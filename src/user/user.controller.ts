@@ -1,40 +1,31 @@
-import { Controller, Get, Param, Render } from '@nestjs/common';
+import { Controller, Post, Body} from '@nestjs/common';
 import { UserService } from './user.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+// import { Observable } from 'rxjs';
+// import { map } from 'rxjs/operators';
+import { CreateUserDto } from './create-user.dto';
 
 @Controller()
 export class UserController { 
   constructor(private readonly userService: UserService) {}
 
-  @Get('users/:id')
-  findOne(@Param('id') id: string): Observable<any> {
-    return this.userService.getUserData().pipe(
-      map(response => {
-        const user = response.data.find((user: any) => user.id === parseInt(id));
-        return user || { message: 'User not found' };
-      })
-    );
+  @Post('create')
+  async create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
   }
 
-  @Get('users')
-  // @Render('index')
-  async getUserData() {
-    const userData = await this.userService.getUserData().toPromise();
-    return { 
-      title: 'User List',
-      users: userData.data 
-    };
-  }
+  // @Get('users/:id')
+  // findOne(@Param('id') id: string): Observable<any> {
+  //   return this.userService.getUserData().pipe(
+  //     map(response => {
+  //       const user = response.data.find((user: any) => user.id === parseInt(id, 10));
+  //       return user || { message: 'User not found' };
+  //     })
+  //   );
+  // }
 
-  @Get()
-  // @Render('index')
-  async getHomePage() {
-    const userData = await this.userService.getUserData().toPromise();
-    return { 
-      title: 'Back API in index.pug',
-      users: userData.data 
-    };
-
-  }
+  // @Get('users')
+  // async getUserData() {
+  //   // const userData = await this.userService.getUserData().toPromise();
+  //   return await this.userService.getUserData().toPromise();
+  // }
 }

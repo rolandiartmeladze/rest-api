@@ -2,7 +2,6 @@ import { Controller, Get, Param, Render } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-// import { response } from 'express';
 
 @Controller()
 export class AppController {
@@ -11,28 +10,30 @@ export class AppController {
   @Get()
   @Render('index')  
   async getHomePage() {
-    return this.appService.getHome().toPromise(); 
+    const response = await this.appService.getUserData().toPromise();
+    return response;
+     
   }
-  
 
+  @Get('users')
+  async getHomePageAPI() {
+    const response = await this.appService.getUserData().toPromise();
+    return response.data;
+  }
+
+
+  
   @Get('/user/:id')
   @Render('user-details')
   findone(@Param('id') id: string): Observable<any> {
     return this.appService.getUserData().pipe(
-      map(response => {
+      map((response: any) => { 
         const user = response.data.find((user: any) => user.id === parseInt(id, 10));
         return user || { message: 'User not found' };
       }),
     );
-  }  
-  
-  @Get('/users/:id')
-  findOne(@Param('id') id: string): Observable<any> {
-    return this.appService.getUserData().pipe(
-      map(response => {
-        const user = response.data.find((user: any) => user.id === parseInt(id));
-        return user || { message: 'User not found' };
-      }),
-    );
   }
+
+
+
 }

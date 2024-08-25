@@ -11,16 +11,15 @@ html
   body
     h1 Back result from Backend API in Home page > index.pug
 
-    if users && users.length
+    
       h2 GET Request: 
         a(href='http://localhost:3000/users', target='_blank') ./users
         p Users List (Click a user to view details)
       section
-        each user in users
+        each user in data
           article(key=user.id, onclick=`viewUser(${user.id})`)
             div
               h5 #{user.first_name} #{user.last_name}
               samp #{user.email}
             img(src=user.avatar, alt=`Avatar of ${user.first_name}`)
-    else
-      p No users found.
+    
