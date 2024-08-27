@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from './user.schema';
 import { CreateUserDto } from './create-user.dto';
 import { HttpService } from '@nestjs/axios';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -23,5 +23,9 @@ export class UserService {
     return this.httpService.get('https://reqres.in/api/users').pipe(
       map(response => response.data)
     );
+  }
+
+  infoFromBase(): Observable<User[]> {
+    return from(this.userModel.find().exec());
   }
 }

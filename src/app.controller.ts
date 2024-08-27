@@ -1,38 +1,49 @@
-import { Controller, Get, Param, Render } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { UserService } from './user/user.service';
+// import { Observable } from 'rxjs';
+// import { map } from 'rxjs/operators';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly userService: UserService
+    ) {}
 
   @Get()
-  @Render('index')  
-  async getHomePage() {
-    const response = await this.appService.getUserData().toPromise();
-    return response;
-     
+  getHomePage() {
+    return this.appService.getUserData().pipe().toPromise();
   }
 
-  @Get('users')
-  async getHomePageAPI() {
-    const response = await this.appService.getUserData().toPromise();
-    return response.data;
-  }
+
+
+  // @Get()
+  // // @Render('index')  
+  // async getHomePage() {
+  //   const response = await this.appService.getUserData().toPromise();
+  //   return response;
+     
+  // }
+
+  // @Get('users')
+  // async getHomePageAPI() {
+  //   const response = await this.appService.getUserData().toPromise();
+  //   return response.data;
+  // }
 
 
   
-  @Get('/user/:id')
-  @Render('user-details')
-  findone(@Param('id') id: string): Observable<any> {
-    return this.appService.getUserData().pipe(
-      map((response: any) => { 
-        const user = response.data.find((user: any) => user.id === parseInt(id, 10));
-        return user || { message: 'User not found' };
-      }),
-    );
-  }
+  // @Get('/user/:id')
+  // // @Render('user-details')
+  // findone(@Param('id') id: string): Observable<any> {
+  //   return this.appService.getUserData().pipe(
+  //     map((response: any) => { 
+  //       const user = response.data.find((user: any) => user.id === parseInt(id, 10));
+  //       return user || { message: 'User not found' };
+  //     }),
+  //   );
+  // }
 
 
 
