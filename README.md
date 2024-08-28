@@ -109,7 +109,7 @@ This project is a simple REST API built using the [NestJS](https://nestjs.com/) 
 To get started with this project, clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/your-username/your-repository.git
+git clone ../rest-api.git
 cd rest-api
 npm install
 =======
