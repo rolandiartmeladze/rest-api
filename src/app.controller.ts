@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { UserService } from './user/user.service';
+// import { promises } from 'dns';
 // import { Observable } from 'rxjs';
 // import { map } from 'rxjs/operators';
 
@@ -14,6 +15,19 @@ export class AppController {
   @Get()
   getHomePage() {
     return this.appService.getUserData().pipe().toPromise();
+  }
+
+
+  @Get('Base')
+
+  async baseResult(): Promise<string> {
+    const isConnected = await this.appService.checkDatabaseConnection();
+    if (isConnected) {
+      const message = await this.appService.createTestUser();
+      return `Database is connected and working. ${message}`;
+    } else {
+      return 'Database is not connected or an error occurred.';
+    }
   }
 
 

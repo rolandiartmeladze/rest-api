@@ -25,7 +25,8 @@ export class UserService {
     );
   }
 
-  infoFromBase(): Observable<User[]> {
-    return from(this.userModel.find().exec());
+   infoFromBase(): Observable<User[]> {
+    const result = this.userModel.find().exec();
+    return from(result);
   }
 }

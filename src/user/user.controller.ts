@@ -14,7 +14,9 @@ export class UserController {
 
     @Get('info')
     getInfoFromBase(): Observable<User[]> {
-      return this.userService.infoFromBase();
+      const result = this.userService.infoFromBase();
+      console.log(result);
+      return result;
     }
   
 
