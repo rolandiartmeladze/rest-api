@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from './user/user.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs';
+// import { promises } from 'dns';
 import { CreateUserDto } from './user/create-user.dto';
 
 @Injectable()
@@ -23,7 +24,7 @@ export class AppService {
   //   }
   // }
 
- async checkDatabaseConnection(): Promise<boolean> {
+  async checkDatabaseConnection(): Promise<boolean> {
     try {
       const result = await this.userService.infoFromBase().toPromise();
       if (result && result.length >= 0) {
@@ -37,12 +38,13 @@ export class AppService {
   }
   
   
-  async createTestUser() {
+  async createTestUser(user:any) {
     const createUserDto: CreateUserDto ={
-      firstName: "test",
-      lastName: "user",
-      email: "test.user@gmail.com",
-      avatarPath: "/path/to/avatar.jpg",
+      id: user.id,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: user.email,
+      avatarPath: user.avatar,
     };
 
       try {
@@ -67,8 +69,4 @@ export class AppService {
             )
         )
   }
-
-
-
-
 }

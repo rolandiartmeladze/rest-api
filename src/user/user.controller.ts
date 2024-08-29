@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body} from '@nestjs/common';
+import { Controller, Get, Param, Post, Body } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,18 +10,11 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
 
-    //from mongoose base 
-
-    @Get('info')
-    getInfoFromBase(): Observable<User[]> {
-      const result = this.userService.infoFromBase();
-      console.log(result);
-      return result;
-    }
-  
-
-
-
+  @Get('info')
+  getInfoFromBase(): Observable<User[]> {
+    const result = this.userService.infoFromBase();
+    return result;
+  }
 
   @Post('create')
   async create(@Body() createUserDto: CreateUserDto) {
@@ -32,10 +25,10 @@ export class UserController {
   @Get()
   async getAllUser(){
     const response = await this.userService.getUserData().toPromise();
-    return response;
+    return response.data;
   }
 
-  @Get(':/id')
+  @Get('/:id')
   getUserById(@Param('id') id: string): Observable<any> {
     return this.userService.getUserData().pipe(
       map((response: any) => {
@@ -45,54 +38,31 @@ export class UserController {
     )
   }
 
-
-
-
-
-  // @Get()
-  // // @Render('index')  
-  // async getHomePage() {
-  //   const response = await this.userService.getUserData().toPromise();
-  //   return response;
-     
-  // }
-
-  // @Get('users')
-  // async getHomePageAPI() {
-  //   const response = await this.userService.getUserData().toPromise();
-  //   return response.data;
-  // }
-
-
-  
-  // @Get('/user/:id')
-  // // @Render('user-details')
-  // findone(@Param('id') id: string): Observable<any> {
+  // @Get('init')
+  // getUserData(): Observable<any> {
   //   return this.userService.getUserData().pipe(
-  //     map((response: any) => { 
-  //       const user = response.data.find((user: any) => user.id === parseInt(id, 10));
-  //       return user || { message: 'User not found' };
-  //     }),
-  //   );
-  // }
-
-
-
-
-
-  // @Get('users/:id')
-  // findOne(@Param('id') id: string): Observable<any> {
-  //   return this.userService.getUserData().pipe(
-  //     map(response => {
-  //       const user = response.data.find((user: any) => user.id === parseInt(id, 10));
-  //       return user || { message: 'User not found' };
+  //     map(async (data: any) => {
+  //       console.log(data);
+  //       await Promise.all(data.map((userInfo: any) => this.createTestUser(userInfo)));
+  //       return data;
   //     })
   //   );
   // }
 
-  // @Get('users')
-  // async getUserData() {
-  //   // const userData = await this.userService.getUserData().toPromise();
-  //   return await this.userService.getUserData().toPromise();
+  // async createTestUser(info: any) {
+  //   const createUserDto: CreateUserDto = {
+  //     firstName: info.first_name,
+  //     lastName: info.last_name,
+  //     email: info.email,
+  //     avatarPath: info.avatar,
+  //   };
+
+  //   try {
+  //     const createdUser = await this.userService.create(createUserDto);
+  //     console.log('Test user created successfully:', createdUser);
+  //   } catch (error) {
+  //     console.error("Error creating test user:", error);
+  //   }
   // }
 }
+

@@ -1,9 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Render, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { UserService } from './user/user.service';
 // import { promises } from 'dns';
-// import { Observable } from 'rxjs';
-// import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Controller()
 export class AppController {
@@ -13,52 +13,38 @@ export class AppController {
     ) {}
 
   @Get()
+  @Render('index')
   getHomePage() {
-    return this.appService.getUserData().pipe().toPromise();
+     return this.appService.getUserData().pipe().toPromise();
   }
 
+  @Get("user/:id")
+  @Render('user-details')
+  getUserById(@Param('id') id: string): Observable<any> {
+    return this.userService.getUserData().pipe(
+      map((response: any) => {
+        const user = response.data.find((user:any) => user.id === parseInt(id, 10));
+        return user || { message: 'Not found'};
+      })
+    )
+  }
 
   @Get('Base')
 
   async baseResult(): Promise<string> {
+    const API = await this.appService.getUserData().pipe().toPromise();
+
+    const result = API.data;
+
+    console.log();
     const isConnected = await this.appService.checkDatabaseConnection();
     if (isConnected) {
-      const message = await this.appService.createTestUser();
-      return `Database is connected and working. ${message}`;
+     for (const user of result){
+      await this.appService.createTestUser(user);
+     }
+      return `Database is connected and working.`;
     } else {
       return 'Database is not connected or an error occurred.';
     }
   }
-
-
-
-  // @Get()
-  // // @Render('index')  
-  // async getHomePage() {
-  //   const response = await this.appService.getUserData().toPromise();
-  //   return response;
-     
-  // }
-
-  // @Get('users')
-  // async getHomePageAPI() {
-  //   const response = await this.appService.getUserData().toPromise();
-  //   return response.data;
-  // }
-
-
-  
-  // @Get('/user/:id')
-  // // @Render('user-details')
-  // findone(@Param('id') id: string): Observable<any> {
-  //   return this.appService.getUserData().pipe(
-  //     map((response: any) => { 
-  //       const user = response.data.find((user: any) => user.id === parseInt(id, 10));
-  //       return user || { message: 'User not found' };
-  //     }),
-  //   );
-  // }
-
-
-
 }

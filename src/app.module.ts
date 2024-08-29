@@ -8,7 +8,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://rartmeladze:rartmeladze@cluster0.ngnskbi.mongodb.net/myDatabase?retryWrites=true&w=majority'),
+    MongooseModule.forRoot('mongodb+srv://rartmeladze:rartmeladze@cluster0.ngnskbi.mongodb.net/nestjs?retryWrites=true&w=majority'),
+    // MongooseModule.forRoot('mongodb://localhost:27017/nestjs'),
     UserModule
   ], 
   controllers: [AppController],
