@@ -38,25 +38,25 @@ export class AppService {
   }
   
   
-  async createTestUser(user:any) {
-    const createUserDto: CreateUserDto ={
-      id: user.id,
-      firstName: user.first_name,
-      lastName: user.last_name,
-      email: user.email,
-      avatarPath: user.avatar,
-    };
+  // async createTestUser(user:any) {
+  //   const createUserDto: CreateUserDto ={
+  //     id: user.id,
+  //     firstName: user.first_name,
+  //     lastName: user.last_name,
+  //     email: user.email,
+  //     avatarPath: user.avatar,
+  //   };
 
-      try {
-        const createdUser = await this.userService.create(createUserDto);
-        console.log('Test user created successfully:', createdUser);
+  //     try {
+  //       const createdUser = await this.userService.create(createUserDto);
+  //       console.log('Test user created successfully:', createdUser);
 
-  } catch (error) {
-      console.error("not working", error)
-  }
+  // } catch (error) {
+  //     console.error("not working", error)
+  // }
 
 
-  }
+  // }
 
 
 

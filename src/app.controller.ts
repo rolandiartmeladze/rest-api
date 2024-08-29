@@ -1,4 +1,4 @@
-import { Controller, Get, Render, Param } from '@nestjs/common';
+import { Controller, Get, Post, Render, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { UserService } from './user/user.service';
 // import { promises } from 'dns';
@@ -18,33 +18,46 @@ export class AppController {
      return this.appService.getUserData().pipe().toPromise();
   }
 
-  @Get("user/:id")
-  @Render('user-details')
-  getUserById(@Param('id') id: string): Observable<any> {
-    return this.userService.getUserData().pipe(
-      map((response: any) => {
-        const user = response.data.find((user:any) => user.id === parseInt(id, 10));
-        return user || { message: 'Not found'};
-      })
-    )
-  }
+  // @Get("user/:id")
+  // @Render('user-details')
+  // getUserById(@Param('id') id: string): Observable<any> {
+  //   return this.userService.getUserData().pipe(
+  //     map((response: any) => {
+  //       const user = response.data.find((user:any) => user.id === parseInt(id, 10));
+  //       return user || { message: 'Not found'};
+  //     })
+  //   )
+  // }
 
-  @Get('Base')
+  // @Get('Base')
 
-  async baseResult(): Promise<string> {
-    const API = await this.appService.getUserData().pipe().toPromise();
+  // async baseResult(): Promise<string> {
+  //   const API = await this.appService.getUserData().pipe().toPromise();
+  //   const result = API.data;
+  //   const isConnected = await this.appService.checkDatabaseConnection();
+  //   if (isConnected) {
+  //    for (const user of result){
+  //     await this.appService.createTestUser(user);
+  //    }
+  //     return `Database is connected and working.`;
+  //   } else {
+  //     return 'Database is not connected or an error occurred.';
+  //   }
+  // }
 
-    const result = API.data;
 
-    console.log();
-    const isConnected = await this.appService.checkDatabaseConnection();
-    if (isConnected) {
-     for (const user of result){
-      await this.appService.createTestUser(user);
-     }
-      return `Database is connected and working.`;
-    } else {
-      return 'Database is not connected or an error occurred.';
-    }
-  }
+  // @Get('users')
+  // async createUsersInfoInBase(): Promise<string> {
+  //   const API = await this.appService.getUserData().pipe().toPromise();
+  //   const result = API.data;
+  //   for (const user of result){
+  //     await this.appService.createTestUser(user);
+  //    }
+  //    return `Database is connected and working.`;
+  // }
+
+  // @Get("api")
+
+
+
 }

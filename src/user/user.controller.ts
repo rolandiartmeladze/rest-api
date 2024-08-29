@@ -1,11 +1,11 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Render } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CreateUserDto } from './create-user.dto';
 import { User } from './user.schema';
 
-@Controller('users')
+@Controller('api')
 export class UserController { 
   constructor(private readonly userService: UserService) {}
 
@@ -25,10 +25,20 @@ export class UserController {
   @Get()
   async getAllUser(){
     const response = await this.userService.getUserData().toPromise();
-    return response.data;
+    return response;
   }
 
-  @Get('/:id')
+  @Get('users')
+  async createUsersInfoInBase(): Promise<string> {
+    const API = await this.userService.getUserData().pipe().toPromise();
+    const result = API.data;
+    for (const user of result){
+      await this.userService.createTestUser(user);
+     }
+     return `<h1>From API Url Back Info And Inset DB</h1>  <a href="../"> show result from Base </a>`;
+  }
+
+  @Get('user/:id')
   getUserById(@Param('id') id: string): Observable<any> {
     return this.userService.getUserData().pipe(
       map((response: any) => {
@@ -38,31 +48,6 @@ export class UserController {
     )
   }
 
-  // @Get('init')
-  // getUserData(): Observable<any> {
-  //   return this.userService.getUserData().pipe(
-  //     map(async (data: any) => {
-  //       console.log(data);
-  //       await Promise.all(data.map((userInfo: any) => this.createTestUser(userInfo)));
-  //       return data;
-  //     })
-  //   );
-  // }
 
-  // async createTestUser(info: any) {
-  //   const createUserDto: CreateUserDto = {
-  //     firstName: info.first_name,
-  //     lastName: info.last_name,
-  //     email: info.email,
-  //     avatarPath: info.avatar,
-  //   };
-
-  //   try {
-  //     const createdUser = await this.userService.create(createUserDto);
-  //     console.log('Test user created successfully:', createdUser);
-  //   } catch (error) {
-  //     console.error("Error creating test user:", error);
-  //   }
-  // }
 }
 
