@@ -1,118 +1,100 @@
 
-# nest.js rest-api
+# NestJS REST API Project
 
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank">
+    <img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" />
+  </a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    
-
-     
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<p align="center">
+  A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.
+</p>
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ npm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-<<<<<<< HEAD
-=======
-# NestJS_Assessment_With_Backend_Software_Web_Engineer
->>>>>>> dadca9eb4aadb2202d6f561ecd340de425e7710a
-=======
-# rest-api
-nest.js Project 
->>>>>>> origin/main
-
-
-
-<hr/>
-<hr/>
-
-# Rest-API Project
-
-This project is a simple REST API built using the [NestJS](https://nestjs.com/) framework. It demonstrates how to integrate views with the Pug template engine and handle basic routing and rendering with NestJS.
+This project is a REST API built using the [NestJS](https://nestjs.com/) framework with TypeScript. The application fetches user data from an external API, stores it in a MongoDB database hosted on MongoDB Atlas, and provides endpoints to retrieve, add, update, and delete users.
 
 ## Table of Contents
 - [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Setup Instructions](#setup-instructions)
+- [Project Setup](#project-setup)
 - [Running the Application](#running-the-application)
+- [API Endpoints](#api-endpoints)
 - [Technologies Used](#technologies-used)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Installation
 
-To get started with this project, clone the repository and install the dependencies:
+To get started, clone the repository and install the dependencies:
 
 ```bash
-git clone ../rest-api.git
+git clone https://github.com/rolandiartmeladze/rest-api.git
 cd rest-api
 npm install
-=======
+```
 
+## Project Setup
 
->>>>>>> ef40c0a99763f99824c617b3ee39c663a660bfd2
+Before running the application, you need to configure your environment variables. Create a `.env` file in the project root and add the following variables:
+
+```env
+MONGO_URI=<Your MongoDB Atlas Connection URI>
+API_URL=https://reqres.in/api/users
+```
+
+Make sure to replace `<Your MongoDB Atlas Connection URI>` with your actual MongoDB Atlas connection string.
+
+## Running the Application
+
+You can run the application in different modes:
+
+```bash
+# Development mode
+npm run start
+
+# Watch mode (auto-restart on changes)
+npm run start:dev
+
+# Production mode
+npm run start:prod
+```
+
+## API Endpoints
+
+- **GET /api/users**: Fetches users from the external API and stores them in the database.
+- **GET /api/users/:id**: Retrieves a specific user from the database by ID.
+- **POST /api/users**: Adds a new user to the database.
+- **PUT /api/users/:id**: Updates a user in the database.
+- **DELETE /api/users/:id**: Deletes a user from the database.
+
+## Running Tests
+
+To ensure the application functions as expected, you can run the following test commands:
+
+```bash
+# Unit tests
+npm run test
+
+# End-to-End (e2e) tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+```
+
+## Technologies Used
+
+- **NestJS**: Framework for building efficient and scalable server-side applications.
+- **TypeScript**: Typed JavaScript for better code quality and maintainability.
+- **MongoDB Atlas**: Cloud-based MongoDB service.
+- **Mongoose**: Elegant MongoDB object modeling for Node.js.
+- **Axios**: Promise-based HTTP client for making requests.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or open an issue.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
