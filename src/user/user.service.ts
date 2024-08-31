@@ -32,7 +32,7 @@ export class UserService {
       try {
         const createdUser = await this.create(createUserDto);
         console.log('Test user created successfully:', createdUser);
-
+        
   } catch (error) {
       console.error("not working", error)
   }

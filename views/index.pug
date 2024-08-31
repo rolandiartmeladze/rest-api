@@ -5,7 +5,7 @@ html
     link(rel='stylesheet', href='/styles.css')
     script.
       function viewUser(userId) {
-        window.location = `/user/${userId}`;
+        window.location = `./api/user/${userId}`;
       }
 
   body
@@ -16,7 +16,7 @@ html
         a(href='http://localhost:3000/users', target='_blank') ./users
         p Users List (Click a user to view details)
       section
-        each user in data
+        each user in users.data
           article(key=user.id, onclick=`viewUser(${user.id})`)
             div
               h5 #{user.first_name} #{user.last_name}
@@ -28,3 +28,15 @@ html
   hr
 
   h1 info from mongoDB/mongoose base
+
+    h2 users info from mongoose base
+      a(href='http://localhost:3000/api/users', target='_blank') ./api/users
+      p Users List (Click a user to view template with POST, DELETE requests form )
+ 
+    section
+      each user in base
+        article
+          div
+            h5 #{user.firstNname} #{user.lastName}
+            samp #{user.email}
+          img(src=user.avatarPath, alt=`Avatar of ${user.firstName}`)
