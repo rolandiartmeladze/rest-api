@@ -7,8 +7,32 @@ html
     h1 Hear Back response With selected user ById
     h3 Back Home 
       a(href=`/`, target='_self') index
-    h2 GET Request:
-      a(href=`/users/${id}`, target='_blank') GET /users/#{id}
+
+    ul 
+      div 
+        b Resuests: 
+        li 
+          label GET
+          a(href=`/api/users/${id}`, target='_blank')  ./api/users/#{id}
+        li 
+          label PULL
+          a(href=`/api/users/${id}/update`, target='_blank')  ./api/users/#{id}/update
+          samp if need Update user info inset info in Inpute
+        li 
+          label DELETE
+          a(href=`/api/users/${id}/delete`, target='_blank')  ./api/users/#{id}/delete
+
+      div 
+        form 
+          label First Name: 
+            input(placeholder='first name')
+          label Last Name: 
+            input(placeholder='last name')
+          label Your Email:
+            input(placeholder='email')
+
+
+    p 
     section 
       article 
         div

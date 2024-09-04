@@ -5,16 +5,20 @@ html
     link(rel='stylesheet', href='/styles.css')
     script.
       function viewUser(userId) {
-        window.location = `./api/user/${userId}`;
+        window.location = `./users/${userId}`;
       }
 
+      function viewUserInBase(userId){
+        window.location = `./api/user/${userId}`;
+      }
   body
     h1 Back result from Backend API in Home page > index.pug
 
     
       h2 GET Request: 
-        a(href='http://localhost:3000/users', target='_blank') ./users
+        a(href='http://localhost:3000/API_DATA', target='_blank')  ./API From Url
         p Users List (Click a user to view details)
+        samp when first send requsest info from API Url record in mongoose base and back  result from base 
       section
         each user in users.data
           article(key=user.id, onclick=`viewUser(${user.id})`)
@@ -35,7 +39,7 @@ html
  
     section
       each user in base
-        article
+        article(onclick=`viewUserInBase(${user.id})`)
           div
             h5 #{user.firstNname} #{user.lastName}
             samp #{user.email}

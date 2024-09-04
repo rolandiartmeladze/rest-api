@@ -27,7 +27,7 @@ export class UserController {
     const response = await this.userService.getUserData().toPromise();
     return response;
   }
-
+  
   @Get('users')
   async createUsersInfoInBase(): Promise<string> {
     const API = await this.userService.getUserData().pipe().toPromise();
@@ -38,7 +38,20 @@ export class UserController {
      return `<h1>From API Url Back Info And Inset DB</h1>  <a href="../"> show result from Base </a>`;
   }
 
+
+  @Get('users/:id')
+  userApi(@Param('id') id: string): Observable<User | { message: string }> {
+    return this.userService.infoFromBase().pipe(
+      map((users: User[]) => {
+        const user = users.find(user => user.id === id);
+        return user || { message: 'Not found' };
+      })
+    );
+  }
+
+  
   @Get('user/:id')
+  @Render('user-details')
   getUserById(@Param('id') id: string): Observable<any> {
     return this.userService.getUserData().pipe(
       map((response: any) => {
@@ -47,7 +60,5 @@ export class UserController {
       })
     )
   }
-
-
 }
 

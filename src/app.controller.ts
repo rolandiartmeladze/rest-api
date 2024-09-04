@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Render, Param } from '@nestjs/common';
+import { Controller, Get, Render, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { UserService } from './user/user.service';
 // import { promises } from 'dns';
-// import { Observable } from 'rxjs';
-// import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { User } from './user/user.schema';
 
 @Controller()
 export class AppController {
@@ -11,6 +12,14 @@ export class AppController {
     private readonly appService: AppService,
     private readonly userService: UserService
     ) {}
+
+
+    
+  @Get('API_DATA')
+  async getUsersFromApi(): Promise<string> {
+    return this.userService.getUserData().pipe().toPromise();
+  }
+
 
   @Get()
   @Render('index')
@@ -27,46 +36,29 @@ export class AppController {
      }
   }
 
-  // @Get("user/:id")
-  // @Render('user-details')
-  // getUserById(@Param('id') id: string): Observable<any> {
-  //   return this.userService.getUserData().pipe(
-  //     map((response: any) => {
-  //       const user = response.data.find((user:any) => user.id === parseInt(id, 10));
-  //       return user || { message: 'Not found'};
-  //     })
-  //   )
-  // }
+  @Get('users/:id')
+  async userApi(@Param('id') id: string): Promise<any> {
+    const result = await this.userService.getUserData().toPromise();
+    console.log(result);
 
-  // @Get('Base')
+    const user = result.data.find((user: any) => user.id === parseInt(id, 10));
 
-  // async baseResult(): Promise<string> {
-  //   const API = await this.appService.getUserData().pipe().toPromise();
-  //   const result = API.data;
-  //   const isConnected = await this.appService.checkDatabaseConnection();
-  //   if (isConnected) {
-  //    for (const user of result){
-  //     await this.appService.createTestUser(user);
-  //    }
-  //     return `Database is connected and working.`;
-  //   } else {
-  //     return 'Database is not connected or an error occurred.';
-  //   }
-  // }
-
-
-  // @Get('users')
-  // async createUsersInfoInBase(): Promise<string> {
-  //   const API = await this.appService.getUserData().pipe().toPromise();
-  //   const result = API.data;
-  //   for (const user of result){
-  //     await this.appService.createTestUser(user);
-  //    }
-  //    return `Database is connected and working.`;
-  // }
-
-  // @Get("api")
-
+    if (user) {
+      return `
+        <h1>User Details From API_URL</h1>
+        <p><strong>ID:</strong> ${user.id}</p>
+        <p><strong>Name:</strong> ${user.first_name} ${user.last_name}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <img src="${user.avatar}" alt="Avatar of ${user.first_name}" />
+        <h1><a href="/">Back Home</a></h1>
+      `;
+    } else {
+      return `
+        <h1>User Not Found</h1>
+        <h1><a href="/">Back Home</a></h1>
+      `;
+    }
+  }
 
 
 }
