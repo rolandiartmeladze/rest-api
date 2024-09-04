@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, Render } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Render, ParseIntPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -40,25 +40,27 @@ export class UserController {
 
 
   @Get('users/:id')
+  @Render('user-details')
   userApi(@Param('id') id: string): Observable<User | { message: string }> {
     return this.userService.infoFromBase().pipe(
       map((users: User[]) => {
-        const user = users.find(user => user.id === id);
+        const user = users.find((user: User) => user.id === id);
+        console.log(user);
         return user || { message: 'Not found' };
       })
     );
   }
 
   
-  @Get('user/:id')
-  @Render('user-details')
-  getUserById(@Param('id') id: string): Observable<any> {
-    return this.userService.getUserData().pipe(
-      map((response: any) => {
-        const user = response.data.find((user:any) => user.id === parseInt(id, 10));
-        return user || { message: 'Not found'};
-      })
-    )
-  }
+  // @Get('users/:id')
+  // @Render('user-details')
+  // getUserById(@Param('id') id: string): Observable<any> {
+  //   return this.userService.getUserData().pipe(
+  //     map((response: any) => {
+  //       const user = response.data.find((user:any) => user.id === id);
+  //       return user || { message: 'Not found'};
+  //     })
+  //   )
+  // }
 }
 
