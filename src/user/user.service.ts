@@ -15,10 +15,14 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
+    if (!createUserDto.id) {
+      const count = await this.userModel.countDocuments();
+      createUserDto = { ...createUserDto, id: (count + 1).toString() };
+    }
+
     const createdUser = new this.userModel(createUserDto);
     return createdUser.save();
   }
-
 
   async createTestUser(user:any) {
     const createUserDto: CreateUserDto ={
@@ -32,7 +36,7 @@ export class UserService {
       try {
         const createdUser = await this.create(createUserDto);
         console.log('Test user created successfully:', createdUser);
-        
+
   } catch (error) {
       console.error("not working", error)
   }

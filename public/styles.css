@@ -112,7 +112,7 @@ ul{
 }
 
 ul li{
-  margin: 4px;
+  margin: 6px;
   margin-left: 12px;
   max-width: 200px;
 }
@@ -147,6 +147,15 @@ form button{
   padding: 5px;
   cursor: pointer;
   border-radius: 5px;
-
+  transition: 0.3s ease-in-out;
 }
 
+form button:hover{
+ color: red;
+ transform: scale(1.09);
+ font-weight: bolder;
+}
+
+.creat form{
+  align-items: center;
+}

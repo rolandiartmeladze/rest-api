@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, Render, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Render } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -17,10 +17,15 @@ export class UserController {
   }
 
   @Post('create')
-  async create(@Body() createUserDto: CreateUserDto) {
+  async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.create(createUserDto);
   }
 
+  @Get('creat')
+  @Render('createNew')
+  createNew() {
+    return {message: 'working'};
+  }
 
   @Get()
   async getAllUser(){
