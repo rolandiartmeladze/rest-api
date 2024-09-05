@@ -61,7 +61,7 @@ export class UserService {
     return createdUser.save();
   }
 
-
+  // creat new user in base from api or inset info
   async createTestUser(user: any): Promise<void> {
     const createUserDto: CreateUserDto = {
       id: user.id,
@@ -77,7 +77,8 @@ export class UserService {
       console.error('Failed to create test user:', error);
     }
   }
-  
+
+  // when first send request ./api/users  creace user from api in base 
   async createUsersInfoInBase(): Promise<string> {
     try {
       const API = await this.getUserData().toPromise();
@@ -92,8 +93,18 @@ export class UserService {
     }
   }
   
-
+  // back users list from base in  Get ./api
   infoFromBase(): Observable<User[]> {
     return from(this.userModel.find().exec());
+  }
+
+
+  async deleteAllUsers(): Promise<void> {
+    try {
+      await this.userModel.deleteMany({});
+      console.log('All users deleted successfully.');
+    } catch (error) {
+      console.error('Error deleting all users:', error);
+    }
   }
 }

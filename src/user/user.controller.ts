@@ -61,4 +61,11 @@ export class UserController {
       })
     );
   }
+
+  @Get('reset')
+  async deleteAllUsers() {
+    await this.userService.deleteAllUsers();
+    return { message: 'All users deleted successfully.' };
+  }
+
 }
