@@ -16,7 +16,14 @@ export class UserService {
     private readonly httpService: HttpService,
   ) {}
 
+  // this funcfion back users info from API Url: 
+  getUserData(): Observable<any> {
+    return this.httpService.get('https://reqres.in/api/users').pipe(
+      map(response => response.data)
+    );
+  }
 
+  // convert User avatra From url image > base64 format in base avatarPeth
   private async convertImageToBase64(url: string): Promise<string> {
     try {
       const response = await axios.get(url, { responseType: 'arraybuffer' });
@@ -29,36 +36,7 @@ export class UserService {
   }
 
 
-
-
-
-  // async create(createUserDto: CreateUserDto, file?: Express.Multer.File): Promise<User> {
-  //   let avatarBase64 = '';
-  
-  //   if (file && file.buffer) {
-  //     avatarBase64 = file.buffer.toString('base64');
-  //   } else if (createUserDto.avatarPath) {
-  //     avatarBase64 = createUserDto.avatarPath;
-  //   } else {
-  //     throw new Error('Avatar file or avatarPath is required.');
-  //   }
-  
-  //   if (!createUserDto.id) {
-  //     const count = await this.userModel.countDocuments();
-  //     createUserDto.id = (count + 1).toString(); 
-  //   }
-  
-  //   const createdUser = new this.userModel({
-  //     ...createUserDto,
-  //     avatarPath: avatarBase64,
-  //   });
-  
-  //   return createdUser.save();
-  // }
-    
-  
-
-
+  // create new user in base from teplate conwert image file in base64 generate unicue id and inset info in base
   async create(createUserDto: CreateUserDto, file?: Express.Multer.File): Promise<User> {
     let avatarBase64 = '';
 
@@ -92,33 +70,28 @@ export class UserService {
       email: user.email,
       avatarPath: user.avatar,
     };
-
+  
     try {
-      const createdUser = await this.create(createUserDto);
-      console.log('Test user created successfully:', createdUser);
+      await this.create(createUserDto);
     } catch (error) {
       console.error('Failed to create test user:', error);
     }
   }
-
-  getUserData(): Observable<any> {
-    return this.httpService.get('https://reqres.in/api/users').pipe(
-      map(response => response.data)
-    );
-  }
-
-
+  
   async createUsersInfoInBase(): Promise<string> {
-    const API = await this.getUserData().toPromise();
-    const result = API.data;
-
-    for (const user of result) {
-      await this.createTestUser(user);
+    try {
+      const API = await this.getUserData().toPromise();
+      const result = API.data;
+  
+      await Promise.all(result.map((user: any) => this.createTestUser(user)));
+  
+      return `<h1>From API Url Back Info And Inserted DB</h1> <a href="../"> Show result from Base </a>`;
+    } catch (error) {
+      console.error('Failed to create users from API:', error);
+      return `<h1>Error occurred while inserting users</h1>`;
     }
-
-    return `<h1>From API Url Back Info And Inset DB</h1>  <a href="../"> show result from Base </a>`;
   }
-
+  
 
   infoFromBase(): Observable<User[]> {
     return from(this.userModel.find().exec());

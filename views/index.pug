@@ -1,3 +1,4 @@
+  // index.pug hear user can show result from API Url: and dataBase mongoose/mongoDB.  user can click URL from requset
 doctype html
 html
   head
@@ -12,9 +13,8 @@ html
         window.location = `./api/users/${userId}`;
       }
   body
+    // form base
     h1 Back result from Backend API in Home page > index.pug
-
-    
       h2 GET Request: 
         a(href='http://localhost:3000/API_DATA', target='_blank')  ./API From Url
         p Users List (Click a user to view details)
@@ -27,12 +27,12 @@ html
               samp #{user.email}
             img(src=user.avatar, alt=`Avatar of ${user.first_name}`)
     
-  br
-  br
-  hr
+        br
+        br
+        hr
 
+  // from base
   h1 info from mongoDB/mongoose base
-
     h2 Create New User  
       a(href='http://localhost:3000/api/createNew') ./api/creat
     h2 users info from mongoose base
@@ -45,6 +45,5 @@ html
           div
             h5 #{user.firstNname} #{user.lastName}
             samp #{user.email}
-          //- img(src=user.avatarPath, alt=`Avatar of ${user.firstName}`)
           img(src=`data:image/jpeg;base64,${user.avatarPath}` alt="Avatar")   
 
