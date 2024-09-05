@@ -1,24 +1,19 @@
-import { Document } from 'mongoose';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Schema, Document } from 'mongoose';
 
 export type UserDocument = User & Document;
 
-@Schema()
 export class User {
-  @Prop({ required: true })
   id: string;
-
-  @Prop({ required: true })
   firstName: string;
-
-  @Prop({ required: true })
   lastName: string;
-
-  @Prop({ required: true, unique: true })
   email: string;
-
-  @Prop({ required: true })
   avatarPath: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const UserSchema = new Schema({
+  id: { type: String, required: true },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  email: { type: String, required: true },
+  avatarPath: { type: String, required: true }, // This will store the base64 string
+});

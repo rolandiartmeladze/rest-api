@@ -1,4 +1,5 @@
-import { Controller, Get, Param, Post, Body, Render } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Render, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor  } from '@nestjs/platform-express';
 import { UserService } from './user.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -17,32 +18,33 @@ export class UserController {
   }
 
   @Post('create')
-  async createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.userService.create(createUserDto);
+  @UseInterceptors(FileInterceptor('avatar'))
+  async createUser(
+    @Body() createUserDto: CreateUserDto,
+    @UploadedFile() file?: Express.Multer.File,
+  ): Promise<User> {
+    return this.userService.create(createUserDto, file);
+  }
+  
+
+  // Render in createNew.pug element
+  @Get('createNew')
+  @Render('createNew')
+  createUserForm() {
+    return {}; 
   }
 
-  @Get('creat')
-  @Render('createNew')
-  createNew() {
-    return {message: 'working'};
-  }
 
   @Get()
   async getAllUser(){
-    const response = await this.userService.getUserData().toPromise();
+    const response = await this.userService.infoFromBase().toPromise();
     return response;
   }
   
   @Get('users')
   async createUsersInfoInBase(): Promise<string> {
-    const API = await this.userService.getUserData().pipe().toPromise();
-    const result = API.data;
-    for (const user of result){
-      await this.userService.createTestUser(user);
-     }
-     return `<h1>From API Url Back Info And Inset DB</h1>  <a href="../"> show result from Base </a>`;
+    return this.userService.createUsersInfoInBase();
   }
-
 
   @Get('users/:id')
   @Render('user-details')
@@ -55,17 +57,4 @@ export class UserController {
       })
     );
   }
-
-  
-  // @Get('users/:id')
-  // @Render('user-details')
-  // getUserById(@Param('id') id: string): Observable<any> {
-  //   return this.userService.getUserData().pipe(
-  //     map((response: any) => {
-  //       const user = response.data.find((user:any) => user.id === id);
-  //       return user || { message: 'Not found'};
-  //     })
-  //   )
-  // }
 }
-

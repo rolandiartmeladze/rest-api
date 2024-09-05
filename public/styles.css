@@ -1,132 +1,118 @@
+body {
+  background-color: gray;
+  font-family: sans-serif;
+  text-align: center;
+  transition: 0.3s ease-in-out;
+}
+
 .App {
-    font-family: sans-serif;
-    text-align: center;
-    transition: 0.3s ease-in-out;
+  font-family: inherit;
+  text-align: inherit;
+  transition: inherit;
+}
 
-  }
-  
-  .flex {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .flex > div {
-    margin: 0 1rem 2rem 1rem;
-    text-align: center;
-  }
-  
-  img {
-    display: inline-block;
-    max-width: 100%;
-  }
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
 
-  body{
-    background-color: gray;
-  }
-  
-  h1{
-    text-align: center;
-    color: cyan;
-  }
-  
-  h2{
-    margin-left: 32px;
-  }
-  h2 a {
-    text-decoration: none;
-  }
-  h2 a:hover {
-    text-decoration: underline;
-  }
-  h2 p {
-    margin-bottom: 4px;
-  }
+.flex > div {
+  margin: 0 1rem 2rem;
+  text-align: center;
+}
 
+img {
+  display: inline-block;
+  max-width: 100%;
+}
 
-  h3 {
-    margin: 8px;
-  }
-  h2 samp{
-    margin-left: 32px;
-    font-size: 80%;
-    color: yellow;
-    font-weight: 300;
-    }
+h1 {
+  color: cyan;
+}
 
-  
-section{
-  gap: 15px;
+h2, h2 a, h2 samp {
+  margin-left: 32px;
+  text-decoration: none;
+}
+
+h2 a:hover {
+  text-decoration: underline;
+}
+
+h2 p, h3, h2 samp {
+  margin-bottom: 4px;
+  color: yellow;
+  font-size: 80%;
+  font-weight: 300;
+}
+
+section {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  gap: 15px;
   cursor: pointer;
   margin-right: 8px;
-
 }
-article{
+
+article {
   display: flex;
-    /* width: 20%; */
-    align-items: center;
-    flex-direction: column;
-    flex-wrap: wrap;
-    padding: 6px;
-    box-shadow: 0px 0px 1px 0.5px black;
-    transition: 0.3s ease-in-out;
-    min-width: 200px;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 6px;
+  box-shadow: 0 0 1px 0.5px black;
+  transition: 0.3s ease-in-out;
+  max-width: 20%;
+  min-width: 200px;
 }
 
-article:hover{
-  box-shadow: 0px 0px 1px 0.5px rgb(255, 255, 255);
-}
-article:hover img{
+article img {
+  max-width: 130px;
   transition: 0.3s ease-in-out;
+}
+
+article:hover {
+  box-shadow: 0 0 1px 0.5px rgb(255, 255, 255);
+}
+
+article:hover img {
   transform: scale(1.04);
 }
 
-article:hover div h5{
-  color: white;
- }
- article:hover div samp{
-  color: yellow;
- }
-  
-
-article div{
-
-    margin: 4px;
+article div {
+  margin: 4px;
 }
 
-h5{
-  margin: 0px;
+h5 {
+  margin: 0;
   text-align: center;
 }
 
-ul{
-  margin: 4px;
-  list-style: none;
+ul {
   display: flex;
   flex-direction: row;
+  margin: 4px;
+  list-style: none;
 }
 
-ul li{
-  margin: 6px;
-  margin-left: 12px;
+ul li {
+  margin: 6px 0 6px 12px;
   max-width: 200px;
 }
 
-
-ul li a{
+ul li a {
   text-decoration: none;
 }
-ul li a:hover{
+
+ul li a:hover {
   text-decoration: underline;
 }
 
-
-ul li samp{
+ul li samp {
   margin-left: 12px;
   width: 150px;
   color: red;
@@ -135,14 +121,15 @@ ul li samp{
 form {
   display: flex;
   flex-direction: column;
-  margin-left:  20px;
+  margin-left: 20px;
   align-items: flex-end;
 }
-form input{
+
+form input {
   margin: 4px;
 }
 
-form button{
+form button {
   margin: 7px;
   padding: 5px;
   cursor: pointer;
@@ -150,12 +137,12 @@ form button{
   transition: 0.3s ease-in-out;
 }
 
-form button:hover{
- color: red;
- transform: scale(1.09);
- font-weight: bolder;
+form button:hover {
+  color: red;
+  transform: scale(1.09);
+  font-weight: bolder;
 }
 
-.creat form{
+.creat form {
   align-items: center;
 }

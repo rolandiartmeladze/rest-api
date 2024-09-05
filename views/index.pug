@@ -34,7 +34,7 @@ html
   h1 info from mongoDB/mongoose base
 
     h2 Create New User  
-      a(href='http://localhost:3000/api/creat') ./api/creat
+      a(href='http://localhost:3000/api/createNew') ./api/creat
     h2 users info from mongoose base
       a(href='http://localhost:3000/api/users', target='_blank') ./api/users
       p Users List (Click a user to view template with POST, DELETE requests form )
@@ -45,4 +45,6 @@ html
           div
             h5 #{user.firstNname} #{user.lastName}
             samp #{user.email}
-          img(src=user.avatarPath, alt=`Avatar of ${user.firstName}`)
+          //- img(src=user.avatarPath, alt=`Avatar of ${user.firstName}`)
+          img(src=`data:image/jpeg;base64,${user.avatarPath}` alt="Avatar")   
+
