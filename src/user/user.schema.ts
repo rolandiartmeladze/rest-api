@@ -4,7 +4,7 @@ export type UserDocument = User & Document;
 // Define the User class. 
 // This serves as a TypeScript class that outlines the properties of a User.
 export class User {
-  _id: Schema.Types.ObjectId;
+  // _id: Schema.Types.ObjectId;
   id: string;
   firstName: string;
   lastName: string;
@@ -15,7 +15,7 @@ export class User {
 // Define the Mongoose schema for the User model.
 // The schema maps the User class properties to the MongoDB document fields.
 export const UserSchema = new Schema({
-  _id: Schema.Types.ObjectId,
+  // _id: Schema.Types.ObjectId,
   id: { type: String, required: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },

@@ -4,6 +4,49 @@ html
   head
     title User Details
     link(rel='stylesheet', href='/styles.css')
+    script.
+      function deleteUser(id) {
+        fetch(`/api/users/${id}/delete`, {
+          method: 'DELETE',
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.message);
+          if (data.message.includes('deleted successfully')) {
+            window.location.href = '/'; 
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+
+      async function updateUser(id) {
+        const form = document.getElementById('updateForm');
+        const formData = new FormData(form);
+        
+        const data = {
+          firstName: formData.get('firstName'),
+          lastName: formData.get('lastName'),
+          email: formData.get('email'),
+        };
+
+        try {
+          const response = await fetch(`/api/users/${id}/update`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+          
+          const result = await response.json();
+          window.location = `/api/users/${id}/update `;
+          console.log(result.message);
+        } catch (error) {
+          console.error('Error updating user:', error);
+        }
+      }
 
 
   body
@@ -18,40 +61,24 @@ html
           label GET
           a(href=`/api/users/${id}`, target='_blank') ./api/users/#{id}
         li 
-          label PULL
-          a(href=`/api/users/${id}/update`) ./api/users/#{id}/update
-          samp if need Update user info inset info in Inpute
-        li 
           label DELETE
-          a(href=`javascript:deleteUser(${id})`) Delete User
-          script.
-            function deleteUser(id) {
-              fetch(`/api/users/${id}/delete`, {
-                method: 'DELETE',
-              })
-              .then(response => response.json())
-              .then(data => {
-                console.log(data.message);
-                if (data.message.includes('deleted successfully')) {
-                  // Optionally handle successful deletion
-                  // For example, you can redirect to another page or remove the item from the DOM
-                  window.location.href = '/'; // Redirect to home or another page
-                }
-              })
-              .catch(error => {
-                console.error('Error:', error);
-              });
-            }
+          a(href=`/api/users/${id}/delete`, onclick=`deleteUser(${id})`) Delete User        
+        
+        li
+          label PULL
+          a(href=`/api/users/${id}/update`, onclick=`updateUser(${id})`) ./api/users/${id}/update
 
       div
-        form(action=`/api/users/${id}/update`, method='post')
+        form(id='updateForm')
           label First Name:
             input(placeholder=`${firstName || 'First Name'}`, name='firstName', type='text')
           label Last Name:
             input(placeholder=`${lastName || 'Last Name'}`, name='lastName', type='text')
           label Your Email:
             input(placeholder=`${email || 'Email'}`, name='email', type='email')
-          button(type='submit') Update
+          button(type='button', onclick=`updateUser(${id})`) Update User
+          button(type='button', onclick=`deleteUser(${id})`) Delete User
+
 
       div 
         section 
