@@ -4,6 +4,8 @@ html
   head
     title User Details
     link(rel='stylesheet', href='/styles.css')
+
+
   body
     h1 Hear Back response With selected user ById
     h3 Back Home 
@@ -17,11 +19,29 @@ html
           a(href=`/api/users/${id}`, target='_blank') ./api/users/#{id}
         li 
           label PULL
-          a(href=`/api/users/${id}/update`, target='_blank') ./api/users/#{id}/update
+          a(href=`/api/users/${id}/update`) ./api/users/#{id}/update
           samp if need Update user info inset info in Inpute
         li 
           label DELETE
-          a(href=`/api/users/${id}/delete`, target='_blank') ./api/users/#{id}/delete
+          a(href=`javascript:deleteUser(${id})`) Delete User
+          script.
+            function deleteUser(id) {
+              fetch(`/api/users/${id}/delete`, {
+                method: 'DELETE',
+              })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data.message);
+                if (data.message.includes('deleted successfully')) {
+                  // Optionally handle successful deletion
+                  // For example, you can redirect to another page or remove the item from the DOM
+                  window.location.href = '/'; // Redirect to home or another page
+                }
+              })
+              .catch(error => {
+                console.error('Error:', error);
+              });
+            }
 
       div
         form(action=`/api/users/${id}/update`, method='post')

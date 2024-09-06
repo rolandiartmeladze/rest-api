@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { 
+  Injectable, 
+  BadRequestException, 
+  NotFoundException 
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './user.schema';
@@ -8,6 +12,8 @@ import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Express } from 'express';
 import axios from 'axios';
+import { isValidObjectId } from 'mongoose';
+
 
 @Injectable()
 export class UserService {
@@ -99,6 +105,7 @@ export class UserService {
   }
 
 
+  // reset info from base users collection
   async deleteAllUsers(): Promise<void> {
     try {
       await this.userModel.deleteMany({});
@@ -107,4 +114,17 @@ export class UserService {
       console.error('Error deleting all users:', error);
     }
   }
-}
+
+  // delete selected user
+  async deleteUserById(id: string): Promise<{ message: string }> {
+    // Ensure `id` is a string and perform any necessary validation
+
+    const deletedUser = await this.userModel.findOneAndDelete({ id }).exec();
+    if (!deletedUser) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    return { message: `User with ID ${id} deleted successfully` };
+  }
+
+}  

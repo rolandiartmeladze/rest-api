@@ -5,6 +5,7 @@ import {
   Post, 
   Body, 
   Render, 
+  Delete,
   UploadedFile, 
   UseInterceptors 
 } from '@nestjs/common';
@@ -61,6 +62,15 @@ export class UserController {
       })
     );
   }
+
+  // DELETE request ./api/users/:id/delete -> Delete user by ID
+  @Delete('users/:id/delete')
+  async deleteUser(@Param('id') id: string) {
+    const user = await this.userService.deleteUserById(id);
+    return user;
+  }
+
+  
 
   @Get('reset')
   async deleteAllUsers() {
