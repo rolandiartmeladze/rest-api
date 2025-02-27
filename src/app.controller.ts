@@ -10,14 +10,13 @@ import { UserService } from './user/user.service';
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
   ) {}
-  
+
   @Get('API_DATA')
   async getUsersFromApi(): Promise<string> {
     return this.userService.getUserData().pipe().toPromise();
   }
-
 
   @Get()
   @Render('index')
@@ -29,9 +28,9 @@ export class AppController {
     return {
       title: 'Result Fron API in index.pug',
       description: 'Project basic endpoints and navigate',
-      users: API_result, 
+      users: API_result,
       base: fromBase,
-     }
+    };
   }
 
   @Get('users/:id')
@@ -57,6 +56,4 @@ export class AppController {
       `;
     }
   }
-
-
 }

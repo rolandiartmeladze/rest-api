@@ -1,4 +1,4 @@
-import { 
+import {
   Controller,
   Get,
   Patch,
@@ -7,8 +7,8 @@ import {
   Body,
   Render,
   Delete,
-  UploadedFile, 
-  UseInterceptors 
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UserService } from './user.service';
@@ -18,12 +18,12 @@ import { CreateUserDto } from './create-user.dto';
 import { User, UserDocument } from './user.schema';
 
 @Controller('api')
-export class UserController { 
+export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // GET request ./api =>  Back Result From base 
+  // GET request ./api =>  Back Result From base
   @Get()
-  async getAllUser(){
+  async getAllUser() {
     return this.userService.infoFromBase().toPromise();
   }
 
@@ -31,7 +31,7 @@ export class UserController {
   @Get('createNew')
   @Render('createNew')
   createUserForm() {
-    return {}; 
+    return {};
   }
 
   // this POST ./api/creat  |> request reate new User in base fom createNew Form template
@@ -63,9 +63,8 @@ export class UserController {
     <a href='/'>Back to Home</a>
   `;
 
-  return userHtml;
-}
-
+    return userHtml;
+  }
 
   //this GET reques if in base not data create new users element from API Url.
   @Get('users')
@@ -82,7 +81,7 @@ export class UserController {
         const user = users.find((user: User) => user.id === id);
         console.log(user);
         return user || { message: 'Not found' };
-      })
+      }),
     );
   }
 
@@ -93,7 +92,9 @@ export class UserController {
   }
 
   @Get('users/:id/update')
-  updatedUser(@Param('id') id: string): Observable<string | { message: string }> {
+  updatedUser(
+    @Param('id') id: string,
+  ): Observable<string | { message: string }> {
     return this.userService.infoFromBase().pipe(
       map((users: User[]) => {
         const user = users.find((user: User) => user.id === id);
@@ -113,21 +114,18 @@ export class UserController {
         <a href='/'> Clilk Hear </a>
         </div>
         `;
-        return template ||  { message: 'User not found' };
-      })
+        return template || { message: 'User not found' };
+      }),
     );
   }
-
-
 
   @Patch('users/:id/update')
   async updateUser(
     @Param('id') id: string,
-    @Body() updateData: Partial<UserDocument>
+    @Body() updateData: Partial<UserDocument>,
   ) {
     return await this.userService.updateUserById(id, updateData);
   }
-
 
   // reset base user collection
   @Get('reset')
@@ -144,5 +142,4 @@ export class UserController {
     `;
     return template;
   }
-
 }

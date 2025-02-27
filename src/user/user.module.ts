@@ -8,7 +8,7 @@ import { HttpModule } from '@nestjs/axios'; // იმპორტირეთ Ht
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    HttpModule, 
+    HttpModule,
   ],
   providers: [UserService],
   controllers: [UserController],

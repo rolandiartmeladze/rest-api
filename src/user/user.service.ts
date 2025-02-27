@@ -1,7 +1,7 @@
-import { 
-  Injectable, 
-  // BadRequestException, 
-  NotFoundException 
+import {
+  Injectable,
+  // BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -14,19 +14,18 @@ import { Express } from 'express';
 import axios from 'axios';
 // import { isValidObjectId } from 'mongoose';
 
-
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>, 
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     private readonly httpService: HttpService,
   ) {}
 
-  // this funcfion back users info from API Url: 
+  // this funcfion back users info from API Url:
   getUserData(): Observable<any> {
-    return this.httpService.get('https://reqres.in/api/users').pipe(
-      map(response => response.data)
-    );
+    return this.httpService
+      .get('https://reqres.in/api/users')
+      .pipe(map((response) => response.data));
   }
 
   // convert User avatra From url image > base64 format in base avatarPeth
@@ -41,9 +40,11 @@ export class UserService {
     }
   }
 
-
   // create new user in base from teplate conwert image file in base64 generate unicue id and inset info in base
-  async create(createUserDto: CreateUserDto, file?: Express.Multer.File): Promise<User> {
+  async create(
+    createUserDto: CreateUserDto,
+    file?: Express.Multer.File,
+  ): Promise<User> {
     let avatarBase64 = '';
 
     if (file) {
@@ -76,7 +77,7 @@ export class UserService {
       email: user.email,
       avatarPath: user.avatar,
     };
-  
+
     try {
       await this.create(createUserDto);
     } catch (error) {
@@ -84,26 +85,32 @@ export class UserService {
     }
   }
 
-  // when first send request ./api/users  creace user from api in base 
+  // when first send request ./api/users  creace user from api in base
   async createUsersInfoInBase(): Promise<string> {
     try {
-      const API = await firstValueFrom(this.getUserData()); 
+      const API = await firstValueFrom(this.getUserData());
       const result = API.data;
-    
-      await Promise.all(result.map(async (user: User) => { 
-        await this.createTestUser(user); 
-      }));
-  
+
+      await Promise.all(
+        result.map(async (user: User) => {
+          await this.createTestUser(user);
+        }),
+      );
+
       const users = await firstValueFrom(this.infoFromBase());
 
-      const userHtmlList = users.map((user: User) => `
+      const userHtmlList = users
+        .map(
+          (user: User) => `
         <tr>
             <td><samp>${user.id}</samp></td>
             <td><samp>${user?.firstName} ${user?.lastName}</samp></td>
             <td><samp>${user.email}</samp></td>
         </tr>
-        `).join('');
-  
+        `,
+        )
+        .join('');
+
       return `
         <h1>From API URL Back Info And creace users in base mongoose </h1> 
         <h2> Back Home <h2>
@@ -127,13 +134,11 @@ export class UserService {
       return `<h1>Error occurred while inserting users</h1>`;
     }
   }
-  
-  
+
   // back users list from base in  Get ./api
   infoFromBase(): Observable<User[]> {
     return from(this.userModel.find().exec());
   }
-
 
   // reset info from base users collection
   async deleteAllUsers(): Promise<void> {
@@ -156,11 +161,16 @@ export class UserService {
   }
 
   // update user can update info from template in base
-  async updateUserById(id: string, updateData: Partial<UserDocument>): Promise<{ message: string }> {
-    const updatedUser = await this.userModel.findOneAndUpdate({ id }, updateData, { new: true }).exec();
+  async updateUserById(
+    id: string,
+    updateData: Partial<UserDocument>,
+  ): Promise<{ message: string }> {
+    const updatedUser = await this.userModel
+      .findOneAndUpdate({ id }, updateData, { new: true })
+      .exec();
     if (!updatedUser) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
     return { message: `User with ID ${id} updated successfully` };
   }
-}  
+}

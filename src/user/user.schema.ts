@@ -1,7 +1,7 @@
 import { Schema, Document } from 'mongoose';
 export type UserDocument = User & Document;
 
-// Define the User class. 
+// Define the User class.
 // This serves as a TypeScript class that outlines the properties of a User.
 export class User {
   // _id: Schema.Types.ObjectId;
